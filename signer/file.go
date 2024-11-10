@@ -10,12 +10,12 @@ import (
 	"github.com/cosmos/gogoproto/proto"
 
 	"github.com/cometbft/cometbft/crypto"
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	cometjson "github.com/cometbft/cometbft/libs/json"
 	"github.com/cometbft/cometbft/libs/protoio"
 	"github.com/cometbft/cometbft/libs/tempfile"
 	cometproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	"github.com/cometbft/cometbft/types"
+	"github.com/liray-unendlich/horcrux-bls/signer/crypto/sdk/bls12_381"
 )
 
 //-------------------------------------------------------------------------------
@@ -146,8 +146,12 @@ func NewFilePV(privKey crypto.PrivKey, keyFilePath, stateFilePath string) *FileP
 
 // GenFilePV generates a new validator with randomly generated private key
 // and sets the filePaths, but does not call Save().
-func GenFilePV(keyFilePath, stateFilePath string) *FilePV {
-	return NewFilePV(ed25519.GenPrivKey(), keyFilePath, stateFilePath)
+func GenFilePV(keyFilePath, stateFilePath string) (*FilePV, error) {
+	privKey, err := bls12_381.GenPrivKey()
+	if err != nil {
+		return nil, fmt.Errorf("failed to generate private key: %w", err)
+	}
+	return NewFilePV(privKey, keyFilePath, stateFilePath), nil
 }
 
 // If loadState is true, we load from the stateFilePath. Otherwise, we use an empty LastSignState.

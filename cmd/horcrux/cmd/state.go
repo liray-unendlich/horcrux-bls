@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/spf13/cobra"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
 
 	cometjson "github.com/cometbft/cometbft/libs/json"
 	cometlog "github.com/cometbft/cometbft/libs/log"

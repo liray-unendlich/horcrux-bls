@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/strangelove-ventures/horcrux/v3/signer"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 )
 
 const (
@@ -13,9 +13,9 @@ const (
 	singleSignerWarning = `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ WARNING: SINGLE-SIGNER MODE SHOULD NOT BE USED FOR MAINNET! @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-Horcrux single-signer mode does not give the level of improved 
+Horcrux single-signer mode does not give the level of improved
 key security and fault tolerance that Horcrux MPC/cosigner mode
-provides. While it is a simpler deployment configuration, 
+provides. While it is a simpler deployment configuration,
 single-signer should only be used for experimentation
 as it is not officially supported by Strangelove.`
 )

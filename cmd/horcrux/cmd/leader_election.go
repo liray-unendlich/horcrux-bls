@@ -6,9 +6,9 @@ import (
 	"time"
 
 	grpcretry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/spf13/cobra"
 	"github.com/strangelove-ventures/horcrux/v3/client"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
 	"github.com/strangelove-ventures/horcrux/v3/signer/multiresolver"
 	"github.com/strangelove-ventures/horcrux/v3/signer/proto"
 	"google.golang.org/grpc"

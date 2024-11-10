@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/strangelove-ventures/horcrux/v3/signer"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/stretchr/testify/require"
 )
 

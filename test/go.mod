@@ -2,6 +2,8 @@ module github.com/strangelove-ventures/horcrux/test
 
 go 1.21
 
+replace github.com/liray-unendlich/horcrux-bls => /home/pukutai/horcrux-bls
+
 require (
 	github.com/cometbft/cometbft v0.38.2
 	github.com/cosmos/cosmos-sdk v0.50.1

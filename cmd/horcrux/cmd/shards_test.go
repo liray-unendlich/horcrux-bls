@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	"github.com/cometbft/cometbft/privval"
+	"github.com/liray-unendlich/horcrux-bls/signer/crypto/cometbft/bls12_381"
 	"github.com/stretchr/testify/require"
 )
 
@@ -17,7 +17,9 @@ func TestEd25519Shards(t *testing.T) {
 
 	privValidatorKeyFile := filepath.Join(tmp, "priv_validator_key.json")
 	privValidatorStateFile := filepath.Join(tmp, "priv_validator_state.json")
-	pv := privval.NewFilePV(ed25519.GenPrivKey(), privValidatorKeyFile, privValidatorStateFile)
+	privKey, err := bls12381.GenPrivKey()
+	require.NoError(t, err)
+	pv := privval.NewFilePV(privKey, privValidatorKeyFile, privValidatorStateFile)
 	pv.Save()
 
 	tcs := []struct {

@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	cometcryptoed25519 "github.com/cometbft/cometbft/crypto/ed25519"
 	"github.com/cometbft/cometbft/crypto/tmhash"
 	cometjson "github.com/cometbft/cometbft/libs/json"
 	cometrand "github.com/cometbft/cometbft/libs/rand"
 	cometprivval "github.com/cometbft/cometbft/privval"
 	cometproto "github.com/cometbft/cometbft/proto/tendermint/types"
+	cometcryptobls12381 "github.com/liray-unendlich/horcrux-bls/signer/crypto/cometbft/bls12_381"
 	"github.com/stretchr/testify/require"
 )
 
@@ -31,7 +31,8 @@ func TestSingleSignerValidator(t *testing.T) {
 		StateDir: filepath.Join(tmpDir, "state"),
 	}
 
-	privateKey := cometcryptoed25519.GenPrivKey()
+	privateKey, err := cometcryptobls12381.GenPrivKey()
+	require.NoError(t, err)
 
 	marshaled, err := cometjson.Marshal(cometprivval.FilePVKey{
 		Address: privateKey.PubKey().Address(),

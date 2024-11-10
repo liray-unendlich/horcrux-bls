@@ -73,7 +73,7 @@ After that is done, initialize the shared configuration for the cosigners on you
 $ horcrux config init --node "tcp://10.168.0.1:1234" --node "tcp://10.168.0.2:1234" --node "tcp://10.168.0.3:1234" --cosigner "tcp://10.168.1.1:2222" --cosigner "tcp://10.168.1.2:2222" --cosigner "tcp://10.168.1.3:2222" --threshold 2 --grpc-timeout 1000ms --raft-timeout 1000ms
 ```
 
-> **Note** 
+> **Note**
 > Note the use of multiple `--node` and `--cosigner` flags. In this example, there are 3 sentry (chain) nodes that each horcrux cosigner will connect to. There are 3 horcrux cosigners, with a threshold of 2 cosigners required to sign a valid block signature.
 
 #### Flags

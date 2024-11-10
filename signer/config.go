@@ -13,9 +13,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/legacy"
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/types/bech32"
+	bls12381 "github.com/liray-unendlich/horcrux-bls/signer/crypto/sdk/bls12_381"
 	"github.com/strangelove-ventures/horcrux/v3/client"
 	"gopkg.in/yaml.v2"
 )
@@ -366,7 +366,7 @@ func PubKey(bech32BasePrefix string, pubKey crypto.PubKey) (string, error) {
 	marshaler := codec.NewProtoCodec(registry)
 	var pk *cryptotypes.PubKey
 	registry.RegisterInterface("cosmos.crypto.PubKey", pk)
-	registry.RegisterImplementations(pk, &ed25519.PubKey{})
+	registry.RegisterImplementations(pk, &bls12381.PubKey{})
 	sdkPK, err := cryptocodec.FromCmtPubKeyInterface(pubKey)
 	if err != nil {
 		return "", err

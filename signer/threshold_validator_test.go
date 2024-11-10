@@ -15,7 +15,6 @@ import (
 	"testing"
 
 	cometcrypto "github.com/cometbft/cometbft/crypto"
-	cometcryptoed25519 "github.com/cometbft/cometbft/crypto/ed25519"
 	"github.com/cometbft/cometbft/crypto/tmhash"
 	cometlog "github.com/cometbft/cometbft/libs/log"
 	cometrand "github.com/cometbft/cometbft/libs/rand"
@@ -23,6 +22,7 @@ import (
 	comet "github.com/cometbft/cometbft/types"
 	"github.com/ethereum/go-ethereum/crypto/ecies"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	cometcryptobls12381 "github.com/liray-unendlich/horcrux-bls/signer/crypto/cometbft/bls12_381"
 	"github.com/stretchr/testify/require"
 	tsed25519 "gitlab.com/unit410/threshold-ed25519/pkg"
 	"golang.org/x/sync/errgroup"
@@ -352,8 +352,8 @@ func getTestLocalCosigners(t *testing.T, threshold, total uint8) ([]*LocalCosign
 		pubKeys[i] = &eciesKey.PublicKey
 	}
 
-	privateKey := cometcryptoed25519.GenPrivKey()
-	privKeyBytes := privateKey[:]
+	privateKey, _ := cometcryptobls12381.GenPrivKey()
+	privKeyBytes := privateKey.Bytes()
 	privShards := tsed25519.DealShares(tsed25519.ExpandSecret(privKeyBytes[:32]), threshold, total)
 
 	tmpDir := t.TempDir()

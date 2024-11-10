@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/spf13/cobra"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
 )
 
 const (

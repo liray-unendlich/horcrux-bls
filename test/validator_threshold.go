@@ -10,9 +10,9 @@ import (
 
 	"github.com/cometbft/cometbft/crypto"
 	"github.com/docker/docker/client"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
 	interchaintest "github.com/strangelove-ventures/interchaintest/v8"
 	"github.com/strangelove-ventures/interchaintest/v8/chain/cosmos"
 	"github.com/strangelove-ventures/interchaintest/v8/ibc"

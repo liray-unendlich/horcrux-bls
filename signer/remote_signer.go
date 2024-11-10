@@ -6,7 +6,6 @@ import (
 	"net"
 	"time"
 
-	cometcryptoed25519 "github.com/cometbft/cometbft/crypto/ed25519"
 	cometcryptoencoding "github.com/cometbft/cometbft/crypto/encoding"
 	cometlog "github.com/cometbft/cometbft/libs/log"
 	cometnet "github.com/cometbft/cometbft/libs/net"
@@ -15,6 +14,7 @@ import (
 	cometprotocrypto "github.com/cometbft/cometbft/proto/tendermint/crypto"
 	cometprotoprivval "github.com/cometbft/cometbft/proto/tendermint/privval"
 	cometproto "github.com/cometbft/cometbft/proto/tendermint/types"
+	cometcryptobls12381 "github.com/liray-unendlich/horcrux-bls/signer/crypto/cometbft/bls12_381"
 )
 
 const connRetrySec = 2
@@ -33,7 +33,7 @@ type ReconnRemoteSigner struct {
 	cometservice.BaseService
 
 	address string
-	privKey cometcryptoed25519.PrivKey
+	privKey cometcryptobls12381.PrivKey
 	privVal PrivValidator
 
 	dialer net.Dialer
@@ -54,10 +54,16 @@ func NewReconnRemoteSigner(
 	maxReadSize int,
 ) *ReconnRemoteSigner {
 	rs := &ReconnRemoteSigner{
-		address:     address,
-		privVal:     privVal,
-		dialer:      dialer,
-		privKey:     cometcryptoed25519.GenPrivKey(),
+		address: address,
+		privVal: privVal,
+		dialer:  dialer,
+		privKey: func() cometcryptobls12381.PrivKey {
+			privKey, err := cometcryptobls12381.GenPrivKey()
+			if err != nil {
+				panic(fmt.Sprintf("failed to generate private key: %v", err))
+			}
+			return *privKey
+		}(),
 		maxReadSize: maxReadSize,
 	}
 
@@ -86,7 +92,7 @@ func (rs *ReconnRemoteSigner) establishConnection(ctx context.Context) (net.Conn
 		return nil, fmt.Errorf("dial error: %w", err)
 	}
 
-	conn, err := cometp2pconn.MakeSecretConnection(netConn, rs.privKey)
+	conn, err := cometp2pconn.MakeSecretConnection(netConn, &rs.privKey)
 	if err != nil {
 		netConn.Close()
 		return nil, fmt.Errorf("secret connection error: %w", err)
@@ -254,7 +260,11 @@ func (rs *ReconnRemoteSigner) handlePubKeyRequest(chainID string) cometprotopriv
 		msgSum.PubKeyResponse.Error = getRemoteSignerError(err)
 		return cometprotoprivval.Message{Sum: msgSum}
 	}
-	pk, err := cometcryptoencoding.PubKeyToProto(cometcryptoed25519.PubKey(pubKey))
+	// 公開鍵を生成
+	blsPubKey, err := cometcryptobls12381.NewPublicKeyFromBytes(pubKey)
+
+	// プロトバッファ用の公開鍵に変換
+	pk, err := cometcryptoencoding.PubKeyToProto(blsPubKey)
 	if err != nil {
 		rs.Logger.Error(
 			"Failed to get Pub Key",

@@ -9,8 +9,8 @@ import (
 	"github.com/cometbft/cometbft/crypto"
 	cometprivval "github.com/cometbft/cometbft/privval"
 	"github.com/cosmos/cosmos-sdk/types/bech32"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/spf13/cobra"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
 )
 
 type AddressCmdOutput struct {

@@ -3,8 +3,8 @@ COMMIT  := $(shell git log -1 --format='%H')
 
 all: install
 
-LD_FLAGS = -X github.com/strangelove-ventures/horcrux/v3/cmd/horcrux/cmd.Version=$(VERSION) \
-	-X github.com/strangelove-ventures/horcrux/v3/cmd/horcrux/cmd.Commit=$(COMMIT)
+LD_FLAGS = -X github.com/liray-unendlich/horcrux-bls/cmd/horcrux/cmd.Version=$(VERSION) \
+	-X github.com/liray-unendlich/horcrux-bls/cmd/horcrux/cmd.Commit=$(COMMIT)
 
 LD_FLAGS += $(LDFLAGS)
 LD_FLAGS := $(strip $(LD_FLAGS))
@@ -24,10 +24,10 @@ test:
 	@go test -race -timeout 30m -mod readonly -v ./...
 
 test-short:
-	@go test -mod readonly -run TestDownedSigners2of3 -v ./... 
+	@go test -mod readonly -run TestDownedSigners2of3 -v ./...
 
 test-signer-short:
-	@go test -mod readonly -run TestThresholdValidator2of3 -v ./... 
+	@go test -mod readonly -run TestThresholdValidator2of3 -v ./...
 
 clean:
 	rm -rf build

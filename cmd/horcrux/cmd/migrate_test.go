@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/strangelove-ventures/horcrux/v3/cmd/horcrux/cmd/testdata"
+	"github.com/liray-unendlich/horcrux-bls/cmd/horcrux/cmd/testdata"
 	"github.com/stretchr/testify/require"
 )
 

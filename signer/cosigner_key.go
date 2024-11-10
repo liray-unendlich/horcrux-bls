@@ -5,9 +5,9 @@ import (
 	"os"
 
 	cometcrypto "github.com/cometbft/cometbft/crypto"
-	cometcryptoed25519 "github.com/cometbft/cometbft/crypto/ed25519"
 	cometcryptoencoding "github.com/cometbft/cometbft/crypto/encoding"
 	cometprotocrypto "github.com/cometbft/cometbft/proto/tendermint/crypto"
+	cometcryptobls12381 "github.com/liray-unendlich/horcrux-bls/signer/crypto/cometbft/bls12_381"
 	amino "github.com/tendermint/go-amino"
 )
 
@@ -64,15 +64,15 @@ func (key *CosignerEd25519Key) UnmarshalJSON(data []byte) error {
 	// To support reading the public key bytes from these key files, we fallback to
 	// amino unmarshalling if the protobuf unmarshalling fails
 	if err != nil {
-		var pub cometcryptoed25519.PubKey
+		var pub cometcryptobls12381.PubKey
 		codec := amino.NewCodec()
 		codec.RegisterInterface((*cometcrypto.PubKey)(nil), nil)
-		codec.RegisterConcrete(cometcryptoed25519.PubKey{}, "tendermint/PubKeyEd25519", nil)
+		codec.RegisterConcrete(cometcryptobls12381.PubKey{}, "tendermint/PubKeyEd25519", nil)
 		errInner := codec.UnmarshalBinaryBare(aux.PubkeyBytes, &pub)
 		if errInner != nil {
 			return err
 		}
-		pubkey = pub
+		pubkey = &pub
 	} else {
 		pubkey, err = cometcryptoencoding.PubKeyFromProto(protoPubkey)
 		if err != nil {

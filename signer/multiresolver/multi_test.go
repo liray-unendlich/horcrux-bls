@@ -10,7 +10,7 @@ import (
 	"time"
 
 	grpcretry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	"github.com/strangelove-ventures/horcrux/v3/signer/multiresolver"
 	"github.com/strangelove-ventures/horcrux/v3/signer/proto"
 	"github.com/stretchr/testify/require"

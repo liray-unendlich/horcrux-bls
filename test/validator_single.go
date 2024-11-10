@@ -10,7 +10,7 @@ import (
 	cometjson "github.com/cometbft/cometbft/libs/json"
 	"github.com/cometbft/cometbft/privval"
 	"github.com/docker/docker/client"
-	"github.com/strangelove-ventures/horcrux/v3/signer"
+	"github.com/liray-unendlich/horcrux-bls/signer"
 	interchaintest "github.com/strangelove-ventures/interchaintest/v8"
 	"github.com/strangelove-ventures/interchaintest/v8/chain/cosmos"
 	"github.com/strangelove-ventures/interchaintest/v8/ibc"
